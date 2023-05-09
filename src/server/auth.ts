@@ -4,7 +4,7 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import SpotifyProvider from "next-auth/providers/spotify";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
@@ -47,10 +47,31 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    // DiscordProvider({
-    //   clientId: env.DISCORD_CLIENT_ID,
-    //   clientSecret: env.DISCORD_CLIENT_SECRET,
-    // }),
+    SpotifyProvider({
+      clientId: env.SPOTIFY_CLIENT_ID,
+      clientSecret: env.SPOTIFY_CLIENT_SECRET,
+      authorization: {
+        params: {
+          redirect_uri: `${env.NEXTAUTH_URL}/api/auth/callback/spotify`,
+          scope: [
+            'user-read-playback-state',
+            'user-modify-playback-state',
+            'user-read-currently-playing',
+            'app-remote-control',
+            'streaming',
+            'playlist-read-private',
+            'playlist-read-collaborative',
+            'playlist-modify-private',
+            'playlist-modify-public',
+            'user-read-playback-position',
+            'user-top-read',
+            'user-read-recently-played',
+            'user-library-modify',
+            'user-library-read'
+          ].join(' '),
+        }
+      },
+    }),
     /**
      * ...add more providers here.
      *
