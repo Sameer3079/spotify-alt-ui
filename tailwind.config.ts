@@ -48,12 +48,16 @@ export default {
         },
         "minimize-logo": {
           "0%": {
-            transform: "translate(0px, 0px)",
-            "font-size": "4.5rem"
+            "font-size": "4.5rem",
+            left: "50%",
+            top: "30%",
+            transform: "translateX(-50%)"
           },
           "100%": {
-            transform: "translate(-38vw, -37vh)",
-            "font-size": "2rem"
+            "font-size": "2rem",
+            left: "0.5rem",
+            top: "0.5rem",
+            transform: "translateX(0%)"
           }
         },
         // Tooltip

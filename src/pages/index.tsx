@@ -29,7 +29,7 @@ function AuthSection({ isHidden }: { isHidden: boolean }) {
         }
         style={{ animationDelay: "0.15s" }}
       >
-        <div className="mt-5 flex w-1/4 animate-fade-up justify-evenly opacity-0">
+        <div className="mt-5 flex h-min w-1/4 animate-fade-up justify-evenly opacity-0">
           <button className="flex items-center rounded-full bg-black px-4 py-2 text-green-500 shadow-none transition-all duration-500 hover:shadow-2xl">
             <Spotify className="mr-3 h-5 w-5" />
             <div>Join</div>
@@ -80,10 +80,15 @@ const Home: NextPage = () => {
         <div className="flex h-56 w-full flex-wrap justify-center">
           <div className="max-content flex w-full justify-center">
             <span
-              className="inline-block w-max animate-minimize-logo text-4xl md:text-7xl"
-              style={{ animationDelay: "4s" }}
+              className="absolute w-max animate-minimize-logo text-4xl md:text-7xl"
+              style={{
+                animationDelay: "4s",
+                left: "50%",
+                top: "30%",
+                transform: "translateX(-50%)",
+              }}
             >
-              <h1 className="animate-fade-up bg-gradient-to-br from-black to-green-700 bg-clip-text py-5 text-center font-display font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm md:leading-[5rem]">
+              <h1 className="animate-fade-up bg-gradient-to-br from-black to-green-700 bg-clip-text text-center font-display font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm">
                 <Balancer>Spotify Alternate UI</Balancer>
               </h1>
             </span>
