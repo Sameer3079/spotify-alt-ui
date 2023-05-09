@@ -1,12 +1,12 @@
-# Create T3 App
+# Spotify Alternate UI
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Built using the [T3 Stack](https://create.t3.gg/).
 
-## What's next? How do I make an app with this?
+Live at [Coming Soon] 🚧
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Technologies
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### T3Stack
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
@@ -14,15 +14,19 @@ If you are not familiar with the different technologies used in this project, pl
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-## Learn More
+### Other
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- [Radix UI](https://www.radix-ui.com/)
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Goal
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+To explore an alternate UI for the Spotify user interface.
 
-## How do I deploy this?
+Aims to be surpass the official Spotify UI in terms of the following
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- Elegance
+- Excellent support for shortcuts
+- Listening stats and visualization
+- Music organization
+  - Organize liked tracks to playlists by month
+  - Playlists for most listened each month
