@@ -15,6 +15,8 @@ export default {
         // Tooltip
         "slide-up-fade": "slide-up-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-down-fade": "slide-down-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        // Logo
+        "minimize-logo": "minimize-logo 1s ease 0.15s normal forwards",
       },
       keyframes: {
         // Fade up and down
@@ -43,6 +45,16 @@ export default {
             opacity: "1",
             transform: "translateY(0px)",
           },
+        },
+        "minimize-logo": {
+          "0%": {
+            transform: "translate(0px, 0px)",
+            "font-size": "4.5rem"
+          },
+          "100%": {
+            transform: "translate(-38vw, -37vh)",
+            "font-size": "2rem"
+          }
         },
         // Tooltip
         "slide-up-fade": {

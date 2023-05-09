@@ -77,10 +77,17 @@ const Home: NextPage = () => {
           fontClass
         }
       >
-        <div className="h-56 w-full">
-          <h1 className="animate-fade-up bg-gradient-to-br from-black to-green-700 bg-clip-text py-5 text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm md:text-7xl md:leading-[5rem]">
-            <Balancer>Spotify Alternate UI</Balancer>
-          </h1>
+        <div className="flex h-56 w-full flex-wrap justify-center">
+          <div className="max-content flex w-full justify-center">
+            <span
+              className="inline-block w-max animate-minimize-logo text-4xl md:text-7xl"
+              style={{ animationDelay: "4s" }}
+            >
+              <h1 className="animate-fade-up bg-gradient-to-br from-black to-green-700 bg-clip-text py-5 text-center font-display font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm md:leading-[5rem]">
+                <Balancer>Spotify Alternate UI</Balancer>
+              </h1>
+            </span>
+          </div>
 
           {showWelcome ? (
             <h1
