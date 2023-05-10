@@ -9,6 +9,7 @@ import { api } from "~/utils/api";
 import { Balancer } from "react-wrap-balancer";
 import Spotify from "~/components/shared/icons/spotify";
 import { useEffect, useState } from "react";
+import NavBar from "~/components/shared/navbar";
 
 function AuthSection({ isHidden }: { isHidden: boolean }) {
   const onSignInClick = () => {
@@ -53,9 +54,11 @@ const Home: NextPage = () => {
   const [showWelcome, setShowWelcome] = useState<boolean>(false);
 
   useEffect(() => {
-    window.setTimeout(() => {
-      setShowWelcome(true);
-    }, 1500);
+    if (session) {
+      window.setTimeout(() => {
+        setShowWelcome(true);
+      }, 1500);
+    }
   }, [session]);
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -71,10 +74,10 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <NavBar session={session} />
       <main
         className={
-          "flex min-h-screen flex-col items-center justify-center bg-white " +
-          fontClass
+          "flex min-h-screen flex-col items-center justify-center " + fontClass
         }
       >
         <div className="flex h-56 w-full flex-wrap justify-center">
