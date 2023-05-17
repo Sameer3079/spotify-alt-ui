@@ -9,7 +9,7 @@ import { api } from "~/utils/api";
 import { Balancer } from "react-wrap-balancer";
 import Spotify from "~/components/shared/icons/spotify";
 import { useEffect, useState } from "react";
-import NavBar from "~/components/shared/navbar";
+import NavBar from "~/components/NavBar/navbar";
 
 function AuthSection({ isHidden }: { isHidden: boolean }) {
   const onSignInClick = () => {

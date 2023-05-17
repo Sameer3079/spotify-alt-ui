@@ -8,7 +8,7 @@ await import("./src/env.mjs");
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ["platform-lookaside.fbsbx.com"],
+    domains: ["platform-lookaside.fbsbx.com", "cdn.cfr.org"],
   },
 
   /**
