@@ -1,11 +1,9 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { sfPro, inter } from "../fonts";
 import cx from "classnames";
 
-import { api } from "~/utils/api";
 import { Balancer } from "react-wrap-balancer";
 import Spotify from "~/components/shared/icons/spotify";
 import { useEffect, useState } from "react";
@@ -31,13 +29,16 @@ function AuthSection({ isHidden }: { isHidden: boolean }) {
         style={{ animationDelay: "0.15s" }}
       >
         <div className="mt-5 flex h-min w-1/4 animate-fade-up justify-evenly opacity-0">
-          <button className="flex items-center rounded-full bg-black px-4 py-2 text-green-500 shadow-none transition-all duration-500 hover:shadow-2xl">
+          <button
+            className="flex cursor-pointer items-center rounded-full bg-black px-4 py-2 text-green-500 shadow-none transition-all duration-500 hover:shadow-2xl"
+            onClick={onSignInClick}
+          >
             <Spotify className="mr-3 h-5 w-5" />
             <div>Join</div>
           </button>
           <button
             onClick={onSignInClick}
-            className="flex items-center rounded-full bg-black px-4 py-2 text-green-500 shadow-none transition-all duration-500 hover:shadow-2xl"
+            className="flex cursor-pointer items-center rounded-full bg-black px-4 py-2 text-green-500 shadow-none transition-all duration-500 hover:shadow-2xl"
           >
             <Spotify className="mr-3 h-5 w-5" />
             <div>Sign in</div>
@@ -83,7 +84,9 @@ const Home: NextPage = () => {
         <div className="flex h-56 w-full flex-wrap justify-center">
           <div className="max-content flex w-full justify-center">
             <span
-              className="absolute w-max animate-minimize-logo text-4xl md:text-7xl"
+              className={`absolute w-max text-4xl md:text-7xl ${
+                session ? "animate-minimize-logo" : ""
+              }`}
               style={{
                 animationDelay: "4s",
                 left: "50%",
@@ -114,27 +117,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-    </div>
-  );
-};
