@@ -3,6 +3,7 @@ import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
+  TokenSet,
 } from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -37,13 +38,70 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    async session({ session, user }) {
+      const [spotify] = await prisma.account.findMany({
+        where: { userId: user.id, provider: "spotify" },
+      })
+      if (!spotify) { return session }
+      if (spotify.expires_at! * 1000 < Date.now()) {
+        console.debug(`Token has expired.`)
+        // If the access token has expired, try to refresh it
+        try {
+          // https://accounts.google.com/.well-known/openid-configuration
+          // We need the `token_endpoint`.
+          const stringInput = env.SPOTIFY_CLIENT_ID + ':' + env.SPOTIFY_CLIENT_SECRET
+          const buffer: Buffer = Buffer.from(stringInput);
+          const authHeader = 'Basic ' + (buffer.toString('base64'));
+
+          const jsonData = {
+            grant_type: 'refresh_token',
+            refresh_token: spotify.refresh_token!,
+          };
+          const formBody = [];
+          type qwe = keyof typeof jsonData;
+          let property: qwe;
+          for (property in jsonData) {
+            const encodedKey = encodeURIComponent(property);
+            const encodedValue = encodeURIComponent(jsonData[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+          const formData = formBody.join("&")
+
+          const response = await fetch(`https://accounts.spotify.com/api/token?grant_type=${'authorization_code'}&refresh_token=${spotify.refresh_token!}`, {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              'Authorization': 'Basic ' + (buffer.toString('base64'))
+            },
+            body: formData,
+            method: "POST",
+          })
+
+          const tokens: TokenSet = await response.json() as TokenSet
+
+          if (!response.ok) throw tokens
+          console.debug(`Token has been refreshed.`)
+
+          await prisma.account.update({
+            data: {
+              access_token: tokens.access_token,
+              expires_at: Math.floor(Date.now() / 1000 + (tokens.expires_in as number)),
+              refresh_token: tokens.refresh_token ?? spotify.refresh_token,
+            },
+            where: {
+              provider_providerAccountId: {
+                provider: "spotify",
+                providerAccountId: spotify.providerAccountId,
+              },
+            },
+          })
+        } catch (error) {
+          console.error("Error refreshing access token", error);
+          // The error property will be used client-side to handle the refresh token error
+          (<{ error: string }><unknown>session).error = "RefreshAccessTokenError"
+        }
+      }
+      return session
+    }
   },
   adapter: PrismaAdapter(prisma),
   providers: [
