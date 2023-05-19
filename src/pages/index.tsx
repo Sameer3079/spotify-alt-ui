@@ -7,7 +7,7 @@ import cx from "classnames";
 import { Balancer } from "react-wrap-balancer";
 import Spotify from "~/components/shared/icons/spotify";
 import { useEffect, useState } from "react";
-import NavBar from "~/components/NavBar/navbar";
+import Script from "next/script";
 
 function AuthSection({ isHidden }: { isHidden: boolean }) {
   const onSignInClick = () => {
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar session={session} />
+      <Script src="https://sdk.scdn.co/spotify-player.js"></Script>
       <main
         className={
           "flex min-h-screen flex-col items-center justify-center " + fontClass
